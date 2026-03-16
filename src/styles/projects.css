@@ -1,0 +1,222 @@
+/* styles/projects.css */
+
+.projects-section {
+    position: relative;
+    padding: 10rem 2rem;
+    background: transparent;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+}
+
+.projects-container {
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* --- Header --- */
+.projects-header {
+    margin-bottom: 4rem;
+}
+
+.system-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+    font-family: ui-monospace, monospace;
+    font-size: 0.75rem;
+    color: #a78bfa;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #a78bfa;
+    border-radius: 50%;
+}
+
+.section-title {
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin: 0;
+}
+
+/* --- The Split Layout --- */
+.projects-split {
+    display: flex;
+    gap: 4rem;
+    align-items: flex-start;
+    /* Required for sticky child */
+}
+
+/* --- Left Side: Interactive List --- */
+.projects-list {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: opacity 0.3s ease, padding-left 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+    opacity: 0.4;
+    /* Dimmed by default */
+}
+
+/* The hover interaction dims non-hovered items, highlights hovered */
+.projects-list:hover .project-row {
+    opacity: 0.2;
+}
+
+.projects-list:hover .project-row:hover,
+.project-row.active {
+    opacity: 1;
+    padding-left: 1rem;
+    /* Indents the active row */
+}
+
+.row-content {
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+    flex: 2;
+}
+
+.row-num {
+    font-family: ui-monospace, monospace;
+    font-size: 0.85rem;
+    color: #a78bfa;
+}
+
+.row-content h3 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.02em;
+}
+
+.row-content p {
+    font-size: 0.95rem;
+    color: #a1a1aa;
+    margin: 0;
+}
+
+.row-tech {
+    flex: 1;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.row-tech span {
+    padding: 4px 12px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: ui-monospace, monospace;
+    font-size: 0.75rem;
+    color: #d4d4d8;
+}
+
+.row-arrow {
+    color: #52525b;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.row-arrow svg {
+    width: 24px;
+    height: 24px;
+}
+
+.project-row.active .row-arrow {
+    color: #a78bfa;
+    transform: translateX(5px);
+}
+
+/* --- Right Side: Sticky Viewport --- */
+.projects-preview {
+    flex: 1;
+    position: sticky;
+    top: 20vh;
+    /* Keeps it in view while scrolling the list */
+}
+
+.preview-glass-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* All images are stacked; only the active one is visible */
+.preview-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.05);
+    /* Start slightly zoomed in */
+    transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+    filter: grayscale(40%);
+}
+
+.preview-img.active {
+    opacity: 1;
+    transform: scale(1);
+    /* Smooth settle out */
+    filter: grayscale(0%);
+}
+
+/* Optional: Glare effect over the images */
+.preview-glass-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 992px) {
+    .projects-split {
+        flex-direction: column-reverse;
+        /* Put image on top on mobile */
+        gap: 2rem;
+    }
+
+    .projects-preview {
+        position: relative;
+        top: 0;
+        width: 100%;
+    }
+
+    .row-content {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .row-tech {
+        display: none;
+        /* Hide tags to save space on mobile */
+    }
+}

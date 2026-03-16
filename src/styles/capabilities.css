@@ -1,0 +1,337 @@
+/* styles/capabilities.css */
+
+.tech-ledger-section {
+    position: relative;
+    padding: 10rem 2rem;
+    background: transparent;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+}
+
+.ledger-container {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    gap: 6rem;
+    align-items: flex-start;
+}
+
+.ledger-left {
+    flex: 1;
+    position: sticky;
+    top: 25vh;
+    max-width: 400px;
+}
+
+.system-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2rem;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: #a78bfa;
+    letter-spacing: 1px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #a78bfa;
+    border-radius: 50%;
+}
+
+.pulsing {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(167, 139, 250, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(167, 139, 250, 0);
+    }
+}
+
+.ledger-title {
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -2px;
+    margin-bottom: 1.5rem;
+}
+
+.ledger-subtitle {
+    font-size: 1.125rem;
+    color: #a1a1aa;
+    line-height: 1.6;
+}
+
+.ledger-right {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding-top: 2rem;
+}
+
+.system-card {
+    position: relative;
+    background: rgba(15, 15, 15, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    perspective: 1000px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: border-color 0.4s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .system-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+                rgba(167, 139, 250, 0.08),
+                transparent 40%);
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .system-card:hover::before {
+        opacity: 1;
+    }
+}
+
+.system-card:hover {
+    border-color: rgba(167, 139, 250, 0.3);
+}
+
+.card-inner {
+    position: relative;
+    z-index: 1;
+    padding: 2.5rem;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out;
+    will-change: transform;
+}
+
+.card-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 1.5rem;
+    transform: translateZ(20px);
+}
+
+.mono-tag {
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 2px;
+}
+
+.card-content {
+    transform: translateZ(30px);
+}
+
+.card-content h3 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin: 0 0 1rem 0;
+}
+
+.card-content p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.7;
+    margin: 0 0 2.5rem 0;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.tech-badge {
+    padding: 6px 14px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #d4d4d8;
+    letter-spacing: 0.5px;
+}
+
+.live-icon-container {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a78bfa;
+}
+
+.ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(167, 139, 250, 0.4);
+}
+
+.ring-1 {
+    width: 30px;
+    height: 30px;
+    border-top-color: #a78bfa;
+    animation: spin 3s linear infinite;
+}
+
+.ring-2 {
+    width: 20px;
+    height: 20px;
+    border-bottom-color: #a78bfa;
+    animation: spin-reverse 2s linear infinite;
+}
+
+.core-dot {
+    width: 6px;
+    height: 6px;
+    background: #a78bfa;
+    border-radius: 50%;
+}
+
+.scanner-icon svg {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    z-index: 2;
+    opacity: 0.8;
+}
+
+.scanner-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #a78bfa;
+    box-shadow: 0 0 8px #a78bfa;
+    animation: scan 2s ease-in-out infinite alternate;
+    z-index: 3;
+}
+
+.pulse-icon .node {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #a78bfa;
+    border-radius: 50%;
+}
+
+.node-1 {
+    top: 5px;
+    left: 5px;
+    animation: flash 1.5s infinite;
+}
+
+.node-2 {
+    bottom: 5px;
+    right: 5px;
+    animation: flash 1.5s infinite 0.5s;
+}
+
+.node-3 {
+    top: 5px;
+    right: 5px;
+    animation: flash 1.5s infinite 1s;
+}
+
+.connection-line {
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.5), transparent);
+    transform: rotate(45deg);
+    animation: pulse 2s infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin-reverse {
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes scan {
+    0% {
+        top: 0%;
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
+}
+
+@keyframes flash {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 8px #a78bfa;
+    }
+}
+
+@media (max-width: 992px) {
+    .ledger-container {
+        flex-direction: column;
+        gap: 4rem;
+    }
+
+    .ledger-left {
+        position: relative;
+        top: 0;
+        max-width: 100%;
+    }
+
+    .ledger-right {
+        padding-top: 0;
+    }
+
+    .card-inner {
+        padding: 2rem;
+    }
+}
