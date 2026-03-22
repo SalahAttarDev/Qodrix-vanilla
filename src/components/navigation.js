@@ -3,69 +3,50 @@ import "../styles/navigation.css";
 export default function renderNavigation() {
     return {
         html: `
-            <header class="tech-header" id="main-nav">
-                <div class="header-container">
+            <nav class="nav-pill" id="main-nav">
+                <a href="#home" class="nav-logo magnetic-elem">Qodrix</a>
+                <div class="nav-separator"></div>
 
-                    <div class="header-left">
-                        <a href="/" class="brand-logo" data-link>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polygon points="12 2 2 22 22 22"></polygon>
-                            </svg>
-                            <span>Qodix</span>
-                        </a>
-                    </div>
+                <div class="nav-active-indicator" id="nav-indicator"></div>
 
-                    <nav class="header-center">
-                        <ul id="primary-menu" class="nav-links">
-                            <li><a href="/" class="nav-item active" data-link>Overview</a></li>
-                            <li><a href="/about" class="nav-item" data-link>Architecture</a></li>
-                            <li><a href="/capabilities" class="nav-item" data-link>Capabilities</a></li>
-                            <li><a href="/projects" class="nav-item" data-link>Projects</a></li>
-                            </li>
-                        </ul>
-                    </nav>
-
-                    <div class="header-right">
-                        <a href="/contact" class="btn-micro" data-link>Deploy Project</a>
-
-                        <button class="mobile-menu-btn" id="mobile-toggle" aria-label="Menu">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="4" y1="12" x2="20" y2="12"></line>
-                                <line x1="4" y1="6" x2="20" y2="6"></line>
-                                <line x1="4" y1="18" x2="20" y2="18"></line>
-                            </svg>
-                        </button>
-                    </div>
-
-                </div>
-            </header>
+                <a href="#home" class="nav-link magnetic-elem active">Home</a>
+                <a href="#about" class="nav-link magnetic-elem">About</a>
+                <a href="#projects" class="nav-link magnetic-elem">Projects</a>
+                <a href="#capabilities" class="nav-link magnetic-elem">Capabilities</a>
+                <a href="#contact" class="nav-link magnetic-elem">Contact</a>
+            </nav>
         `,
         mount: () => {
-            const navbar = document.getElementById('main-nav');
-            const mobileToggle = document.getElementById('mobile-toggle');
-            const navLinks = document.querySelector('.header-center');
+            const nav = document.getElementById('main-nav');
+            const indicator = document.getElementById('nav-indicator');
+            const links = nav.querySelectorAll('.nav-link');
 
-            const toggleMenu = () => {
-                navLinks.classList.toggle('show');
+            function updateIndicator(activeLink) {
+                const width = activeLink.offsetWidth;
+                const left = activeLink.offsetLeft;
+                indicator.style.width = `${width}px`;
+                indicator.style.transform = `translateX(${left}px)`;
+            }
+
+            setTimeout(() => {
+                const activeLink = nav.querySelector('.nav-link.active');
+                if (activeLink) updateIndicator(activeLink);
+            }, 50);
+
+            const handleNavClick = (e) => {
+                links.forEach(l => l.classList.remove('active'));
+                e.currentTarget.classList.add('active');
+                updateIndicator(e.currentTarget);
             };
 
-            const handleToggleClick = (e) => {
-                e.stopPropagation();
-                toggleMenu();
-            };
-
-            const handleOutsideClick = (e) => {
-                if (navLinks.classList.contains('show') && !navbar.contains(e.target)) {
-                    navLinks.classList.remove('show');
-                }
-            };
-
-            mobileToggle.addEventListener('click', handleToggleClick);
-            document.addEventListener('click', handleOutsideClick);
+            links.forEach(link => {
+                link.addEventListener('click', handleNavClick);
+            });
 
             return () => {
-                mobileToggle.removeEventListener('click', handleToggleClick);
-                document.removeEventListener('click', handleOutsideClick);
+                links.forEach(link => {
+                    link.removeEventListener('click', handleNavClick);
+                });
             };
         }
     };

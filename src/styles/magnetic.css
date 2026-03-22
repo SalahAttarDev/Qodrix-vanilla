@@ -1,0 +1,12 @@
+/* styles/cursor.css */
+
+.magnetic-elem {
+    /* This cubic-bezier creates a smooth, snappy rubber-band feel */
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+
+    /* Transforms don't work on default inline elements like <a> or <span> */
+    display: inline-block;
+
+    /* Optional: but usually magnetic elements are clickable */
+    cursor: pointer;
+}

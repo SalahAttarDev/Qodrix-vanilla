@@ -1,3 +1,5 @@
+/* styles/hero.css */
+
 .hero-section {
     position: relative;
     min-height: 100vh;
@@ -5,22 +7,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background-color: #050505;
-}
-
-.hero-spotlight {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .hero-spotlight {
-        background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, -20%),
-                rgba(124, 58, 237, 0.12),
-                transparent 40%);
-    }
+    /* Removed solid background so global textures work */
 }
 
 .hero-container {
@@ -32,51 +19,128 @@
     text-align: center;
 }
 
-.trust-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 16px;
-    border-radius: 50px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    font-size: 0.875rem;
-    color: #a78bfa;
-    margin-bottom: 2rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    font-weight: 500;
-}
+/* --- THE NEW TYPOGRAPHY & STYLING --- */
 
-.trust-badge-dot {
-    width: 6px;
-    height: 6px;
-    background-color: #8b5cf6;
-    border-radius: 50%;
-    margin-right: 8px;
-    box-shadow: 0 0 10px #8b5cf6;
-}
-
-.hero-logo {
-    height: 48px;
+.sleek-logo {
+    font-size: 24px;
+    font-weight: 600;
     margin-bottom: 2rem;
+    letter-spacing: -0.05em;
+    color: #ffffff;
+    opacity: 0.9;
 }
 
 .hero-headline {
-    font-size: clamp(3rem, 7vw, 6rem);
-    line-height: 1.05;
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    margin-bottom: 1.5rem;
+    /* Pushes the font size to be massive on desktop, but scales down gracefully on mobile */
+    font-size: clamp(3.5rem, 9vw, 8.5rem);
+    line-height: 0.92;
+    /* Ultra-tight vertical spacing */
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    /* Squeezes the letters together for a custom logo feel */
+    color: #ffffff;
+    margin-bottom: 2rem;
 }
 
 .highlight-text {
-    background: linear-gradient(135deg, #c084fc 0%, #7c3aed 100%);
+    /* Brighter, more sophisticated gradient */
+    background: linear-gradient(135deg, #e9d5ff 0%, #a78bfa 50%, #7c3aed 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     position: relative;
     display: inline-block;
+    padding-right: 0.1em;
+    /* Prevents clipping on italic/tight fonts */
+}
+
+/* --- THE NEW STAND-OUT ELEMENT --- */
+.ambient-text-glow {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 1px;
+    background: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 0 40px 20px rgba(139, 92, 246, 0.15);
+    z-index: 1;
+    opacity: 0;
+    animation: pulse-glow 4s infinite alternate ease-in-out;
+}
+
+@keyframes pulse-glow {
+    0% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scaleX(0.8);
+    }
+
+    100% {
+        opacity: 0.7;
+        transform: translate(-50%, -50%) scaleX(1.1);
+    }
+}
+
+/* --- THE BLUR REVEAL ANIMATION --- */
+.blur-in {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+        filter 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+        transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    /* Staggers the animation based on the inline style variable */
+    transition-delay: calc(var(--animation-order) * 0.1s);
+}
+
+.blur-in.is-visible {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0);
+}
+
+/* --- REFINED SUPPORTING ELEMENTS --- */
+.trust-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    font-size: 0.8rem;
+    color: #e9d5ff;
+    margin-bottom: 2rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.trust-badge-dot.pulsing {
+    width: 6px;
+    height: 6px;
+    background-color: #a78bfa;
+    border-radius: 50%;
+    margin-right: 8px;
+    box-shadow: 0 0 12px #a78bfa;
+    animation: dot-pulse 2s infinite;
+}
+
+@keyframes dot-pulse {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(0.8);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .hero-subheading {
@@ -89,10 +153,12 @@
 .subtitle-main {
     font-size: 1.25rem;
     font-weight: 400;
-    line-height: 1.5;
+    /* Lighter weight */
+    line-height: 1.6;
     color: #a1a1aa;
 }
 
+/* --- FIXED BUTTONS --- */
 .hero-buttons {
     display: flex;
     gap: 1.5rem;
@@ -109,6 +175,7 @@
     border-radius: 100px;
     font-size: 1.125rem;
     font-weight: 500;
+    font-family: inherit;
     color: #ffffff;
     text-decoration: none;
     cursor: pointer;
@@ -118,13 +185,12 @@
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    outline: none;
 }
 
 .btn-glass.primary {
     background: rgba(139, 92, 246, 0.15);
     border: 1px solid rgba(139, 92, 246, 0.3);
-    box-shadow: 0 4px 30px rgba(124, 58, 237, 0.2), inset 0 0 20px rgba(139, 92, 246, 0.1);
 }
 
 .btn-glass:hover {
@@ -136,7 +202,7 @@
 .btn-glass.primary:hover {
     background: rgba(139, 92, 246, 0.3);
     border-color: rgba(139, 92, 246, 0.5);
-    box-shadow: 0 10px 40px rgba(124, 58, 237, 0.4), inset 0 0 20px rgba(139, 92, 246, 0.2);
+    box-shadow: 0 10px 40px rgba(124, 58, 237, 0.4);
 }
 
 .btn-icon {
@@ -151,8 +217,53 @@
 }
 
 @media (max-width: 768px) {
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+        padding: 0 1rem;
+    }
+
     .btn-glass {
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
+        width: 100%;
+    }
+}
+
+
+.text-glow-sweep {
+
+    background: linear-gradient(110deg,
+            #7c3aed 0%,
+            /* Deep Violet */
+            #a78bfa 40%,
+            /* Soft Purple */
+            #ffffff 50%,
+            /* The Light Beam */
+            #a78bfa 60%,
+            /* Soft Purple */
+            #7c3aed 100%
+            /* Deep Violet */
+        );
+
+
+    background-size: 200% auto;
+
+    /* Clips the moving background strictly to the shape of the letters */
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Runs the sweeping animation continuously */
+    animation: sweep-shine 3s linear infinite;
+
+    display: inline-block;
+    padding-right: 0.1em;
+    /* Prevents the last letter from getting clipped by the browser */
+}
+
+/* The physics of the sweeping light */
+@keyframes sweep-shine {
+    to {
+        background-position: 200% center;
     }
 }

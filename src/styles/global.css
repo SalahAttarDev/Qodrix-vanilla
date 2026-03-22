@@ -8,31 +8,85 @@ body {
     overflow-x: hidden;
 }
 
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-    pointer-events: none;
-    background-image:
-        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
+section {
+    background: transparent !important;
 }
 
-@media (hover: hover) and (pointer: fine) {
-    body::before {
-        mask-image: radial-gradient(circle 400px at var(--mouse-x, 50%) var(--mouse-y, 50%),
-                black 0%,
-                rgba(0, 0, 0, 0.2) 60%,
-                transparent 100%);
-        -webkit-mask-image: radial-gradient(circle 400px at var(--mouse-x, 50%) var(--mouse-y, 50%),
-                black 0%,
-                rgba(0, 0, 0, 0.2) 60%,
-                transparent 100%);
+/* --- 1. The Deep Background & Noise --- */
+.ambient-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    background: #050505;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.ambient-canvas::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+/* --- 2. The Glowing Orbs --- */
+.glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.5;
+}
+
+.orb-1 {
+    width: 50vw;
+    height: 50vw;
+    background: rgba(99, 102, 241, 0.4);
+    /* Indigo */
+    top: -20vw;
+    left: -10vw;
+    animation: breathe 10s infinite alternate ease-in-out;
+}
+
+.orb-2 {
+    width: 60vw;
+    height: 60vw;
+    background: rgba(20, 241, 149, 0.2);
+    /* Cyan */
+    bottom: -20vw;
+    right: -10vw;
+    animation: breathe 12s infinite alternate-reverse ease-in-out;
+}
+
+.orb-mouse {
+    width: 40vw;
+    height: 40vw;
+    background: rgba(139, 92, 246, 0.5);
+    /* Violet */
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+}
+
+@keyframes breathe {
+    0% {
+        transform: scale(1) translate(0, 0);
+    }
+
+    100% {
+        transform: scale(1.1) translate(3vw, 2vw);
     }
 }
 
-section {
-    background: transparent !important;
+/* --- 3. The New Kinetic Grid Canvas --- */
+#magnetic-grid-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    /* Sits above the aurora, below the text/buttons */
+    pointer-events: none;
+    /* Clicks pass right through it */
 }

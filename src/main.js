@@ -1,6 +1,7 @@
 import App from './App.js';
 import './styles/global.css';
-
+import { initMagneticElements } from './utils/magnetic.js';
+'./utils/magnetic.js'
 // ... rest of your main.js code
 let unmountFunctions = [];
 
@@ -39,7 +40,10 @@ function initApp(root) {
 function init() {
     let root = createRoot();
     initApp(root);
+    initMagneticElements();
 }
 
 init();
+
+
 console.log("Cleanup functions to run on unmount:", unmountFunctions);
